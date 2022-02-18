@@ -2,6 +2,7 @@ from enum import auto
 from django.db import models
 #from django.contrib.auth.models import User
 from accounts.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Employee(models.Model):
@@ -25,10 +26,17 @@ BIKE_CONDITIONS = (
     ("Bad", "Bad"),
 )
 
+AVAILABILITY_CHOICES = (
+    ("1", "Available"),
+    ("2", "Not Available"),
+)
+
 class Bike(models.Model):
     bike_number = models.CharField(max_length=200, unique=True, primary_key=True)
     condition = models.CharField(max_length=200, choices=BIKE_CONDITIONS)
     price = models.FloatField(default=0)
+    rental_rate = models.FloatField(default=0)
+    availability = models.CharField(max_length=200, default="1", choices=AVAILABILITY_CHOICES)
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     added_by =models.ForeignKey(Employee, on_delete=models.PROTECT)
@@ -36,29 +44,9 @@ class Bike(models.Model):
     def __str__(self):
         return self.bike_number
 
+    def get_absolute_url(self):
+        return reverse("home")
 
-class Spare(models.Model):
-    name = models.CharField(max_length=200)
-    buying_price = models.IntegerField(default=0)
-    resell_price = models.IntegerField(default=0)
-    current_stock = models.IntegerField(default=0)
-    restock_level = models.IntegerField(default=0)
-    date_acquired = models.DateField(auto_now_add=True)
-    date_restocked = models.DateField(auto_now=True)
-    recorded_by = models.ForeignKey(Employee, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-class SpareSale(models.Model):
-    spare = models.ForeignKey(Spare, on_delete=models.SET_NULL, null=True)
-    quantity = models.IntegerField(default=0)
-    total_price = models.IntegerField(default=0)
-    date_sold = models.DateField(auto_now_add=True)
-    sold_by = models.ForeignKey(Employee, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.spare.name
 
 RENTAL_PERIODS = (
     (1, "1 Hour"),
@@ -77,18 +65,33 @@ RENTAL_PERIODS = (
 )    
 
 
-class RentBike(models.Model):
+class Rental(models.Model):
     bike = models.ForeignKey(Bike, on_delete=models.CASCADE)
     renter_id = models.CharField(max_length=200)
-    renter_name = models.CharField(max_length=200)
-    rent_period = models.IntegerField(choices=RENTAL_PERIODS)
-    bike_rent_rate = models.IntegerField(default=0)
+    rental_period = models.IntegerField(choices=RENTAL_PERIODS)
+    returned_condition = models.CharField(max_length=200, choices=BIKE_CONDITIONS)
+    damage_fee = models.FloatField(default=0)
+    overtime_fee = models.FloatField(default=0)
+    total_charged = models.FloatField(default=0)
     time_left = models.DateTimeField(auto_now_add=True)
     time_returned = models.DateTimeField(auto_now=True)
-    returned_condition = models.CharField(max_length=200, choices=BIKE_CONDITIONS)
-    total_charge = models.FloatField(default=0)
     recorded_by = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.renter_name
+        return self.renter_id
+
+    @property
+    def rental_fee(self):
+        return self.rental_period * self.bike.rental_rate
+
+    @property
+    def extra_fee(self):
+        return self.damage_fee + self.overtime_fee
+
+    @property
+    def total_fee(self):
+        return self.rental_fee + self.extra_fee
+
+    def get_absolute_url(self):
+        return reverse("rentals")
     

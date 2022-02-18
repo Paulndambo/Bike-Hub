@@ -13,42 +13,34 @@
 								<h5 class="card-title mb-0">BIKES LIST</h5>
 							</div>
 							<div class="col-3">
-								<a href="{% url 'new-bike' %}" class="btn btn-secondary">New Bike</a>
+								<a href="#" class="btn btn-secondary">New Bike</a>
 							</div>
 						</div>
 					</div>
 					<table class="table table-hover my-0">
 						<thead>
-						<tr>
-							<th>Bike Number</th>
-							<th>Condition</th>
-                			<th>Price</th>
-							<th>Availability</th>
-							<th>Added By</th>
-                			<th colspan="2">Actions</th>
-						</tr>
+							<tr>
+                <th>#</th>
+								<th>Bike Number</th>
+								<th>Condition</th>
+                <th>Price</th>
+                <th colspan="2">Actions</th>
+							</tr>
 						</thead>
 						<tbody>
 {% for bike in bikes %}
-			<tr>
-				<td>{{bike.bike_number}}</td>
+							<tr>
+                <td>{{bike.id}}</td>
+								<td>{{bike.bike_number}}</td>
                 <td class="">{{bike.condition}}</td>
                 <td class="">{{bike.price}}</td>
-{% if bike.availability == "1" %}
-<td class="">Available</td>
-{% else %}
-<td class="">Not Available</td>
-{% endif %}				
-
-				
-				<td class="">{{bike.added_by}}</td>
-				<td>
-                  <a href="{% url 'update-bike' bike.pk %}" class="btn btn-primary">Update</a>
+								<td class="">
+                  <a href="#" class="btn btn-primary">Bike Details</a>
                 </td>
-				<td>
-					<a href="#" class="btn btn-danger">Delete</a>
-				  </td>
-				</tr>
+								<td>
+                  <a href="#" class="btn btn-danger">Delete</a>
+                </td>
+							</tr>
 {% endfor %}
 						</tbody>
 					</table>

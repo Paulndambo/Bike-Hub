@@ -1,0 +1,58 @@
+
+{% extends "component-base.html" %}
+{% block content %}
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title mb-0">BIKES RENTALS LIST</h5>
+							</div>
+							<div class="col-3">
+								<a href="{% url 'rent-bike' %}" class="btn btn-secondary">Rent A Bike</a>
+							</div>
+						</div>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+						<tr>
+                            <th>#</th>
+							<th>Bike </th>
+							<th>Renter ID</th>
+                			<th>Period</th>
+							<th>Rental Fee</th>
+                            <th>Damage & Overtime Fee</th>
+							<th>Total Charged</th>
+                			<th>Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+{% for rental in rentals %}
+			<tr>
+				<td>{{rental.id}}</td>
+                <td class="">{{rental.bike}}</td>
+                <td class="">{{rental.renter_id}}</td>
+                <td class="">{{rental.rental_period}}</td>
+                <td class="">{{rental.rental_fee}}</td>
+                <td class="">{{rental.extra_fee}}</td>
+                <td class="">{{rental.total_fee}}</td>
+               
+				<td>
+                  <a href="{% url 'update-rental' rental.pk %}" class="btn btn-primary">Update</a>
+                </td>
+				</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}
