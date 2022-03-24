@@ -8,10 +8,27 @@ from . forms import EmployeeForm
 @login_required(login_url="login")
 def home(request):
     bikes = Bike.objects.all()
+    labels = []
+    data = []
+    queryset = Rental.objects.all()
+    for item in queryset:
+        labels.append(item.bike)
+        data.append(item.total_charged)
+    context = {
+        "bikes": bikes,
+        "labels": labels,
+        "data": data
+    }
+    return render(request, "home.html", context)
+
+
+def bikes(request):
+    bikes = Bike.objects.all()
     context = {
         "bikes": bikes
     }
-    return render(request, "home.html", context)
+    return render(request, "bikes.html", context)
+
 
 class NewBike(CreateView):
     model = Bike 

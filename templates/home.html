@@ -5,59 +5,37 @@
 <main class="content">
 	<div class="container-fluid p-0">
 		<div class="row">
-			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
-				<div class="card flex-fill">
-					<div class="card-header">
-						<div class="row">
-							<div class="col-9">
-								<h5 class="card-title mb-0">BIKES LIST</h5>
-							</div>
-							<div class="col-3">
-								<a href="{% url 'new-bike' %}" class="btn btn-secondary">New Bike</a>
-							</div>
-						</div>
-					</div>
-					<table class="table table-hover my-0">
-						<thead>
-						<tr>
-							<th>Bike Number</th>
-							<th>Condition</th>
-                			<th>Price</th>
-							<th>Availability</th>
-							<th>Added By</th>
-                			<th colspan="2">Actions</th>
-						</tr>
-						</thead>
-						<tbody>
-{% for bike in bikes %}
-			<tr>
-				<td>{{bike.bike_number}}</td>
-                <td class="">{{bike.condition}}</td>
-                <td class="">{{bike.price}}</td>
-{% if bike.availability == "1" %}
-<td class="">Available</td>
-{% else %}
-<td class="">Not Available</td>
-{% endif %}				
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
 
-				
-				<td class="">{{bike.added_by}}</td>
-				<td>
-                  <a href="{% url 'update-bike' bike.pk %}" class="btn btn-primary">Update</a>
-                </td>
-				<td>
-					<a href="#" class="btn btn-danger">Delete</a>
-				  </td>
-				</tr>
-{% endfor %}
-						</tbody>
-					</table>
-				</div>
+				<canvas id="bar-chart" width="800" height="450"></canvas>
+
 			</div>
-		</div>
-
+			<div class="col-md-2"></div>
 	</div>
 </main>
 
+<script type="text/javascript">
+	new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["Monday", "Sunday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      datasets: [
+        {
+          label: "Rental (Tens)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#c77850", "#c23850"],
+          data: [50,30,175,66,20,76,12]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Bike Rentals (Daily)'
+      }
+    }
+});
+</script>
 
 {% endblock content %}

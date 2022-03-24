@@ -19,6 +19,8 @@
 
 	<link href="{% static 'admin/css/app.css' %}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 </head>
 
 <body>
@@ -32,13 +34,13 @@
 				<ul class="sidebar-nav">
 
 					<li class="sidebar-item active">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="{% url 'home' %}">
               <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">DASHBOARD</span>
             </a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="{% url 'bikes' %}">
               <i class="align-middle" data-feather="paper"></i> <span class="align-middle">BIKES</span>
             </a>
 					</li>
@@ -52,29 +54,14 @@
               <i class="align-middle" data-feather="users"></i> <span class="align-middle">EMPLOYEES</span>
             </a>
 					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="">
-              <i class="align-middle" data-feather="paper"></i> <span class="align-middle">CUSTOMERS</span>
-            </a>
-					</li>
+					
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
-              <i class="align-middle" data-feather="paper"></i> <span class="align-middle">USERS</span>
-            </a>
-					</li>
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="#">
               <i class="align-middle" data-feather="paper"></i> <span class="align-middle">REPORTS</span>
             </a>
 					</li>
-					
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
-              <i class="align-middle" data-feather="paper"></i> <span class="align-middle">PROMOTIONS</span>
-            </a>
-		</li>
-				
+									
 			</ul>
 			</div>
 		</nav>
