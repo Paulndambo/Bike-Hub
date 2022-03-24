@@ -1,8 +1,9 @@
 from multiprocessing import context
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from . models import Bike, Rental
+from . models import Bike, Employee, Rental
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
+from . forms import EmployeeForm
 # Create your views here.
 @login_required(login_url="login")
 def home(request):
@@ -39,3 +40,16 @@ class UpdateRental(UpdateView):
     model = Rental
     fields = ["bike", "returned_condition", "damage_fee", "overtime_fee"]
     template_name = "bikes/update-rental.html"
+
+def employees(request):
+    employees = Employee.objects.all()
+    context = {
+        "employees": employees
+    }
+    return render(request, "bikes/employees.html", context)
+
+class NewEmployee(CreateView):
+    model = Employee
+    #fields = "__all__"
+    form_class = EmployeeForm
+    template_name = "bikes/new-employee.html"

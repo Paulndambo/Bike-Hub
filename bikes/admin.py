@@ -18,4 +18,4 @@ class RentBikeAdmin(admin.ModelAdmin):
     list_display = ["bike", "rental_period", "returned_condition", "total_charged"]
 
 
-
+admin.site.register(Hub)

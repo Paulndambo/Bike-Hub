@@ -5,9 +5,25 @@ from accounts.models import User
 from django.urls import reverse
 
 # Create your models here.
+class Hub(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    country = models.CharField(max_length=200)
+    #location = models.JSONField(null=True)
+    latitude = models.CharField(max_length=15, null=True)
+    longitude = models.CharField(max_length=15, null=True)
+    number_of_bikes = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
+    gender = models.CharField(max_length=200, default="Male")
     id_number = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
@@ -19,6 +35,10 @@ class Employee(models.Model):
 
     def employee_address(self):
         return self.address + "-"+self.city+" , "+self.country
+
+    
+    def get_absolute_url(self):
+        return reverse("employees")
 
 
 BIKE_CONDITIONS = (
@@ -33,6 +53,7 @@ AVAILABILITY_CHOICES = (
 
 class Bike(models.Model):
     bike_number = models.CharField(max_length=200, unique=True, primary_key=True)
+    hub = models.ForeignKey(Hub, on_delete=models.SET_NULL, null=True)
     condition = models.CharField(max_length=200, choices=BIKE_CONDITIONS)
     price = models.FloatField(default=0)
     rental_rate = models.FloatField(default=0)

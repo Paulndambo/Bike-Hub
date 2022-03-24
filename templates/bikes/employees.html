@@ -1,0 +1,56 @@
+
+{% extends "component-base.html" %}
+{% block content %}
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+				<div class="card flex-fill">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-9">
+								<h5 class="card-title mb-0">BIKE-HUB EMPLOYEES LIST</h5>
+							</div>
+							<div class="col-3">
+								<a href="{% url 'new-employee' %}" class="btn btn-secondary">New Employee</a>
+							</div>
+						</div>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+						<tr>
+                            <th>#</th>
+							<th>Name</th>
+							<th>ID Number</th>
+                			<th>Phone Number</th>
+							<th>Address</th>
+                			<th colspan="2">Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+{% for employee in employees %}
+			<tr>
+                <td>{{employee.id}}</td>
+				<td>{{employee.name}}</td>
+                <td>{{employee.id_number}}</td>
+                <td>{{employee.phone_number}}</td>
+                <td>{{employee.employee_address}}</td>              
+				<td>
+                  <a href="#" class="btn btn-primary">Update</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                  </td>
+				</tr>
+{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</main>
+
+
+{% endblock content %}

@@ -8,4 +8,6 @@ urlpatterns = [
     path("rentals/", views.rentals, name="rentals"),
     path("rent-bike/", views.RentBike.as_view(), name="rent-bike"),
     path("update-rental/<str:pk>/", views.UpdateRental.as_view(), name="update-rental"),
+    path("employees/", views.employees, name="employees"),
+    path("new-employee/", views.NewEmployee.as_view(), name="new-employee"),
 ]
